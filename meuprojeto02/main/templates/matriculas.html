@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canes RS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+  <!-- Incluindo FontAwesome (ajustado para a versão correta) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="https://scontent-gru1-2.xx.fbcdn.net/v/t39.30808-6/469044015_1845406492886065_3027740038612027073_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHUapbCxfRaqzq3xpvQI0_mN2rsNR9zZP83auw1H3Nk_2Yonwi7XnQHY3yl2xYLbgDpjZlm8shZ9v2ZA5jZkseh&_nc_ohc=dt8agHX2DsoQ7kNvgFmNsxm&_nc_zt=23&_nc_ht=scontent-gru1-2.xx&_nc_gid=A4r6z9hC1CJAf72FKOXdNKn&oh=00_AYDWot1cbwh2Oz2PFfQWPJgiwKPHbx3DIMIPSB-ZajEHow&oe=67552163" type="image/png">
+    <style>
+        /* Resetando alguns estilos padrão */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Estilos gerais do corpo da página */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: column;
+            align-items: flex-start;
+            min-height: 100vh;
+            color: #007bff;
+        }
+        
+        /* Navbar */
+        .navbar-brand {
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .navbar-brand img {
+            width: 40px;
+            height: auto;
+            margin-right: 10px;
+        }
+        
+        /* Container principal */
+        .container {
+            background-color: #ffffff;
+            width: 500px;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 100px; /* Adiciona margem para afastar da navbar */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 100px; /* Adiciona um espaço abaixo da box de opções */
+        }
+        
+        /* Título */
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #007bff;
+        }
+        
+        /* Estilo do formulário */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        fieldset {
+            border: none;
+            margin-bottom: 20px;
+        }
+        
+        legend {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .course-category {
+            margin-bottom: 20px;
+        }
+        
+        /* Melhoria no título das categorias */
+.course-category h3 {
+    font-size: 18px;
+    color: #007bff; /* Cor do título */
+    margin-bottom: 15px; /* Aumenta o espaço entre o título e a descrição */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold; /* Deixa o título em negrito */
+}
+
+/* Estilo da descrição do curso */
+.course-category p {
+    font-size: 14px;
+    color: #6c757d; /* Cor mais suave para a descrição */
+    margin-bottom: 20px; /* Adiciona mais espaço entre as descrições */
+}
+        
+        /* Alinhamento das checkboxes com seus textos */
+        label {
+            display: flex;
+            align-items: center; /* Alinha checkbox e nome horizontalmente */
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        /* Estilo dos checkboxes */
+        input[type="checkbox"] {
+            margin-right: 15px; /* Aumenta o espaço entre checkbox e o nome */
+            width: 18px; /* Aumenta o tamanho do checkbox */
+            height: 18px; /* Aumenta o tamanho do checkbox */
+        }
+        
+        /* Estilo do botão */
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #0952a0;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            margin-top: auto;
+        }
+        
+        .footer .row {
+            margin-bottom: 20px;
+        }
+        
+        .footer h5 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .footer ul li a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer .text-center {
+            font-size: 14px;
+            color: #bbb;
+        }
+        
+        /* Estilo para os ícones dentro do rodapé */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        /* Estilos para os links dos ícones */
+        .social-icons a {
+            color: #fff;
+            background: #555;
+            border-radius: 50%;
+            text-align: center;
+            text-decoration: none;
+            font-family: 'FontAwesome', sans-serif;
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            padding-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: #007bff;
+        }
+        
+        /* Pop-up de texto ao passar o mouse */
+        .social-icons a span {
+            color: #666;
+            position: absolute;
+            font-family: sans-serif;
+            bottom: 0;
+            left: -25px;
+            right: -25px;
+            padding: 5px 7px;
+            z-index: -1;
+            font-size: 14px;
+            border-radius: 2px;
+            background: #fff;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* Setas para os pop-ups */
+        .social-icons a span:before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #fff;
+            position: absolute;
+            bottom: -5px;
+            left: 40px;
+        }
+        
+        /* Exibição do pop-up */
+        .social-icons a:hover span {
+            bottom: 50px;
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Font Awesome Icons */
+        .social-icons a.facebook:before {
+            content: '\f09a'; /* Facebook */
+        }
+        
+        .social-icons a.twitter:before {
+            content: '\f099'; /* Twitter */
+        }
+        
+        .social-icons a.google-plus:before {
+            content: '\f0d5'; /* Google+ */
+        }
+        
+        .social-icons a.github:before {
+            content: '\f113'; /* Github */
+        }
+        
+        .social-icons a.codepen:before {
+            content: '\f1cb'; /* CodePen */
+        }
+        
+        /* Estilos de responsividade */
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 20px;
+            }
+        
+            h1 {
+                font-size: 20px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <a class="navbar-brand" href="{% url 'index' %}">
+          <img src="https://scontent-gru1-2.xx.fbcdn.net/v/t39.30808-6/469044015_1845406492886065_3027740038612027073_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=flQCp1KYCU8Q7kNvgEl_Xn2&_nc_zt=23&_nc_ht=scontent-gru1-2.xx&_nc_gid=A2tVyF3GRz2GVyVJrxr_1A6&oh=00_AYBefhYS59qNNszgRLYTd2xYfGBr26h7yR2rSEVgFDYSvw&oe=678345E3" alt="Logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'index' %}">Início</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'sobre' %}">Sobre Nós</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'cursos' %}">Cursos</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contato' %}">Contato</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+          </ul>
+      </div>
+  </nav>
+
+  {% if messages %}
+  <div id="messages">
+      {% for message in messages %}
+          <div class="alert {% if message.tags %}{{ message.tags }}{% else %}alert-info{% endif %}">
+              {{ message }}
+          </div>
+      {% endfor %}
+  </div>
+{% endif %}
+
+  <div class="container">
+    <h1>Inscrição nos Cursos</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="id_usuario" value="{{ user.id }}">
+    
+        <fieldset>
+            <legend>Escolha os cursos que deseja se inscrever:</legend>
+    
+            {% if cursos %}
+            <div id="curso-categories">
+                {% for curso in cursos %}
+                <div class="course-category">
+                    <label>
+                        <input type="checkbox" class="curso-checkbox" name="curso" value="{{ curso.id }}"> {{ curso.nome }}
+                    </label>
+                    <p>{{ curso.descricao }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>{{ message }}</p>
+            {% endif %}
+    
+            <button type="submit">Enviar Inscrição</button>
+        </fieldset>
+    </form>
+</div>
+
+
+
+    <!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2024 Canes RS. Todos os direitos reservados.</p>
+    <!-- Ícones de Redes Sociais -->
+    <div class="social-icons">
+        <a href="#" class="facebook"><span>Facebook</span></a>
+        <a href="#" class="twitter"><span>Twitter</span></a>
+        <a href="#" class="google-plus"><span>Google+</span></a>
+        <a href="#" class="github"><span>Github</span></a>
+        <a href="#" class="codepen"><span>CodePen</span></a>
+    </div>
+  </footer>
+
+</body>
+</html>

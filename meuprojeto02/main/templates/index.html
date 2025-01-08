@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canes RS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+   <!-- Incluindo FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="https://scontent-gru1-2.xx.fbcdn.net/v/t39.30808-6/469044015_1845406492886065_3027740038612027073_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=flQCp1KYCU8Q7kNvgEl_Xn2&_nc_zt=23&_nc_ht=scontent-gru1-2.xx&_nc_gid=A2tVyF3GRz2GVyVJrxr_1A6&oh=00_AYBefhYS59qNNszgRLYTd2xYfGBr26h7yR2rSEVgFDYSvw&oe=678345E3" type="image/png">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      padding-top: 70px;
+      background-color: #f7f7f7;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 30px;
+      text-align: center; /* Centraliza os textos */
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px; /* Adiciona espaço abaixo do título */
+    }
+
+    .section-content {
+      font-size: 16px;
+      color: #777;
+      margin-top: 10px;
+      text-align: center; /* Garante que o texto do conteúdo seja centralizado */
+      max-width: 800px; /* Limita a largura para evitar texto esticado */
+    }
+
+    /* Certifique-se de que o link ocupe todo o card */
+.card-link {
+  display: block; /* Faz o link ocupar toda a área do card */
+  text-decoration: none; /* Remove o sublinhado do link */
+  color: inherit; /* Faz com que a cor do texto do link seja a mesma do card */
+}
+
+/* Garante que o conteúdo do card (fundo e informações) não seja alterado */
+.card-wrap {
+  position: relative;
+  perspective: 1000px;
+}
+
+.card {
+  position: relative;
+  width: 285px;
+  height: 400px;
+  background-color: #333;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.6s ease;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.card-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.card-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  color: #fff;
+  transform: translateY(100%);
+  transition: transform 0.6s ease;
+  background: rgba(0, 0, 0, 0.6);
+  border-top: 3px solid #fff;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Efeitos de Hover */
+.card-wrap:hover .card {
+  transform: unset;
+}
+
+.card-wrap:hover .card-bg {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+.card-wrap:hover .card-info {
+  transform: translateY(0);
+}
+
+.card-wrap:hover .card-info p {
+  opacity: 1;
+}
+
+    .cta-btn {
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .cta-btn:hover {
+      background-color: #0056b3;
+      color: white;
+    }
+
+    /* Navbar */
+    .navbar-brand {
+      font-size: 30px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .navbar-brand img {
+      width: 40px;
+      height: auto;
+      margin-right: 10px;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 8px; /* Bordas arredondadas */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave */
+      opacity: 0;
+      animation: fadeIn 1s forwards, zoomIn 1.5s ease-in-out forwards; /* Animações de entrada */
+    }
+
+    /* Animação de fadeIn - Faz a imagem aparecer suavemente */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Animação de zoomIn - Faz a imagem ampliar levemente ao entrar */
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.95); /* Inicia com a imagem ligeiramente menor */
+  }
+  100% {
+    transform: scale(1); /* A imagem cresce para o seu tamanho normal */
+  }
+}
+
+/* Efeito de hover para ampliar a imagem e dar brilho */
+.carousel-item img:hover {
+  transform: scale(1.05); /* Aumenta a imagem ao passar o mouse */
+  filter: brightness(1.1); /* Aumenta o brilho */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .carousel-item img {
+    height: 400px; /* Ajuste a altura para telas menores */
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-item img {
+    height: 300px; /* Ajuste ainda mais para dispositivos móveis */
+  }
+}
+
+    .large-text {
+      font-size: 48px;
+      font-weight: bold;
+      color: #333;
+    }
+
+
+    /* Ajuste para telas menores */
+    @media (max-width: 767px) {
+      .login-btn {
+        top: 80px; /* Ajuste para que não sobreponha a navbar em dispositivos menores */
+      }
+    }
+
+/* Contêiner para a info-box e imagem */
+.info-box-container {
+  display: flex; /* Usando Flexbox para alinhar os itens */
+  align-items: center; /* Alinha o conteúdo verticalmente no centro */
+  justify-content: center; /* Alinha o conteúdo horizontalmente */
+  position: relative; /* Necessário para posicionar a imagem ao lado */
+  gap: 20px; /* Espaçamento entre o texto e a imagem */
+  padding: 20px 0; /* Adiciona um pouco de espaço em cima e embaixo */
+}
+
+/* Estilos para a caixa de informações (info-box) */
+.info-box {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex; /* Permite usar o Flexbox dentro da box */
+  flex-direction: column; /* Organiza os elementos na vertical */
+  justify-content: center; /* Centraliza o conteúdo verticalmente */
+  align-items: center; /* Centraliza o conteúdo horizontalmente */
+  width: 800px; /* Largura fixa para a box */
+  height: auto; /* A altura é ajustada automaticamente */
+  margin-top: 40px; /* Espaço para separar da seção anterior (carrossel) */
+  margin-bottom: 30px; /* Espaço para separar dos cards abaixo */
+}
+
+/* Ajustes no título */
+.info-box h2 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px; /* Espaço abaixo do título */
+}
+
+/* Ajustes no conteúdo */
+.info-box .section-content {
+  font-size: 16px;
+  color: #777;
+  max-width: 800px; /* Limita a largura para evitar que o texto se estique demais */
+  margin: 0; /* Remove margens para garantir melhor centralização */
+}
+
+/* Estilos para a imagem */
+.info-image {
+  width: 180px; /* Tamanho reduzido para a imagem */
+  height: auto; /* Mantém a proporção da imagem */
+  border-radius: 8px; /* Bordas arredondadas para combinar com o estilo da box */
+  position: absolute; /* Posiciona a imagem no canto direito */
+  right: 90px; /* Distância da borda direita */
+  z-index: -1;
+}
+
+
+/* Footer */
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer .row {
+      margin-bottom: 20px;
+    }
+
+    .footer h5 {
+      font-size: 18px;
+      font-weight: bold;
+
+    }
+
+    .footer ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .footer .text-center {
+      font-size: 14px;
+      color: #bbb;
+    }
+
+     /* Estilo para os ícones dentro do rodapé */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Estilos para os links dos ícones */
+.social-icons a {
+    color: #fff;
+    background: #555; /* Cor de fundo mais discreta para os ícones */
+    border-radius: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'FontAwesome', sans-serif;
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    padding-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background: #007bff; /* Cor de fundo do hover */
+}
+
+/* Pop-up de texto ao passar o mouse */
+.social-icons a span {
+    color: #666;
+    position: absolute;
+    font-family: sans-serif;
+    bottom: 0;
+    left: -25px;
+    right: -25px;
+    padding: 5px 7px;
+    z-index: -1;
+    font-size: 14px;
+    border-radius: 2px;
+    background: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+/* Setas para os pop-ups */
+.social-icons a span:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff;
+    position: absolute;
+    bottom: -5px;
+    left: 40px;
+}
+
+/* Exibição do pop-up */
+.social-icons a:hover span {
+    bottom: 50px;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Font Awesome Icons */
+.social-icons a.facebook:before {
+    content: '\f09a'; /* Facebook */
+}
+
+.social-icons a.twitter:before {
+    content: '\f099'; /* Twitter */
+}
+
+.social-icons a.google-plus:before {
+    content: '\f0d5'; /* Google+ */
+}
+
+.social-icons a.github:before {
+    content: '\f113'; /* Github */
+}
+
+.social-icons a.codepen:before {
+    content: '\f1cb'; /* CodePen */
+}
+
+  </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="{% url 'index' %}">
+      <img src="https://scontent-gru1-2.xx.fbcdn.net/v/t39.30808-6/469044015_1845406492886065_3027740038612027073_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=flQCp1KYCU8Q7kNvgEl_Xn2&_nc_zt=23&_nc_ht=scontent-gru1-2.xx&_nc_gid=A2tVyF3GRz2GVyVJrxr_1A6&oh=00_AYBefhYS59qNNszgRLYTd2xYfGBr26h7yR2rSEVgFDYSvw&oe=678345E3" alt="Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Início <span class="sr-only">(atual)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'sobre' %}">Sobre Nós</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cursos' %}">Cursos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contato' %}">Contato</a>
+        </li>
+        <!-- Adicionando o item de Login na Navbar -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Login</a> <!-- Link para a página de login -->
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Seção Carrossel de Imagens -->
+  <section class="hero-section">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://scontent-gru1-1.xx.fbcdn.net/v/t39.30808-6/469865092_1849800842446630_8405942227550061763_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=NFKWB2At2E8Q7kNvgEtJqd5&_nc_zt=23&_nc_ht=scontent-gru1-1.xx&_nc_gid=ApbUEHkVfomT6sRC2XKH5mE&oh=00_AYDtjVxkEs8APaPZX7yPBbFayp0bvj5-_kBjwDTGYQs9zA&oe=6783400C" class="d-block w-100" alt="Curso 1">
+        </div>
+        <div class="carousel-item">
+          <img src="https://scontent-gru2-2.xx.fbcdn.net/v/t39.30808-6/469938674_1849804829112898_3699452735116348692_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_ohc=xJW6wzK9xBkQ7kNvgEBeQ-7&_nc_zt=23&_nc_ht=scontent-gru2-2.xx&_nc_gid=AIPvmy5x7GH9uxXhc6qvm-H&oh=00_AYC9OLKF1Fc1rTT61o_PJy9VsCD5hVcGBOA_i83ocm4Inw&oe=678338B4" class="d-block w-100" alt="Curso 2">
+        </div>
+        <div class="carousel-item">
+          <img src="https://scontent-gru2-1.xx.fbcdn.net/v/t39.30808-6/469338460_1846838259409555_1895922666318096388_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_ohc=yQtdYQPsaZ8Q7kNvgHG3Ab6&_nc_zt=23&_nc_ht=scontent-gru2-1.xx&_nc_gid=AQkAqz9U3gVlI9a8jhQwkVw&oh=00_AYDS8oC7mrCvnkEdBo_h5K9b8s2uz7wi7btnO1NI83uYpQ&oe=678355AA" class="d-block w-100" alt="Curso 3">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Anterior</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Próximo</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Seção "Seja Bem-Vindo ao Canes" -->
+<div class="info-box-container">
+  <div class="info-box">
+    <div class="section-title">Seja Bem-Vindo ao Canes RS</div>
+    <div class="section-content">
+      Na Canes RS, acreditamos no poder da educação para transformar vidas. Por isso, oferecemos cursos gratuitos e de alta qualidade, permitindo que você aprenda novas habilidades e se desenvolva no mercado de trabalho. Junte-se a nós e aproveite a oportunidade de crescer profissionalmente com materiais didáticos de excelência e um aprendizado acessível para todos.    </div>
+  </div>
+
+  <!-- Imagem ao lado do texto -->
+  <img src="https://scontent-gru1-2.xx.fbcdn.net/v/t39.30808-6/469044015_1845406492886065_3027740038612027073_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=flQCp1KYCU8Q7kNvgEl_Xn2&_nc_zt=23&_nc_ht=scontent-gru1-2.xx&_nc_gid=A2tVyF3GRz2GVyVJrxr_1A6&oh=00_AYBefhYS59qNNszgRLYTd2xYfGBr26h7yR2rSEVgFDYSvw&oe=678345E3" alt="Imagem de exemplo" class="info-image">
+</div>
+ <!-- Seção Cursos -->
+ <section id="cursos" class="text-center">
+  <h2></h2>
+  <div id="app" class="container">
+    <!-- Card 1 -->
+    <div class="card-wrap">
+      <a href="{% url 'programacao' %}" class="card-link">
+        <div class="card">
+          <div class="card-bg" style="background-image: url('https://programadorviking.com.br/wp-content/uploads/2020/11/Os-Melhores-Sites-Para-Desafios-de-Programacao.jpg');"></div>
+          <div class="card-info">
+            <h3>Linguagem de Programação</h3>
+            <p>Aprenda a programar e desenvolva suas habilidades para o mercado de trabalho.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card-wrap">
+      <a href="{% url 'marketing' %}" class="card-link">
+        <div class="card">
+          <div class="card-bg" style="background-image: url('https://mardini.com.br/wp-content/uploads/2023/04/sites-web-marketing-e1680639442992.jpeg');"></div>
+          <div class="card-info">
+            <h3>Marketing Digital</h3>
+            <p>Domine as estratégias de marketing digital e impulsione seus negócios.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card-wrap">
+      <a href="{% url 'design' %}" class="card-link">
+        <div class="card">
+          <div class="card-bg" style="background-image: url('https://img.freepik.com/free-vector/graphic-design-art-profession-theme_24877-63484.jpg');"></div>
+          <div class="card-info">
+            <h3>Design Gráfico</h3>
+            <p>Crie designs incríveis para redes sociais, sites e materiais publicitários.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section> 
+
+
+<script>
+  // Vue.js component definition
+  Vue.component('card', {
+    template: `
+      <div class="card-wrap"
+        @mousemove="handleMouseMove"
+        @mouseenter="handleMouseEnter"
+        @mouseleave="handleMouseLeave"
+        ref="card">
+        <div class="card"
+          :style="cardStyle">
+          <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>
+          <div class="card-info">
+            <slot name="header"></slot>
+            <slot name="content"></slot>
+          </div>
+        </div>
+      </div>
+    `,
+    mounted() {
+      this.width = this.$refs.card.offsetWidth;
+      this.height = this.$refs.card.offsetHeight;
+    },
+    props: ['dataImage'],
+    data: () => ({
+      width: 0,
+      height: 0,
+      mouseX: 0,
+      mouseY: 0,
+      mouseLeaveDelay: null
+    }),
+    computed: {
+      mousePX() {
+        return this.mouseX / this.width;
+      },
+      mousePY() {
+        return this.mouseY / this.height;
+      },
+      cardStyle() {
+        const rX = this.mousePX * 15;
+        const rY = this.mousePY * -15;
+        return {
+          transform: `rotateY(${rX}deg) rotateX(${rY}deg)`
+        };
+      },
+      cardBgTransform() {
+        const tX = this.mousePX * -30;
+        const tY = this.mousePY * -30;
+        return {
+          transform: `translateX(${tX}px) translateY(${tY}px)`
+        };
+      },
+      cardBgImage() {
+        return {
+          backgroundImage: `url(${this.dataImage})`
+        };
+      }
+    },
+    methods: {
+      handleMouseMove(e) {
+        this.mouseX = e.pageX - this.$refs.card.offsetLeft - this.width / 2;
+        this.mouseY = e.pageY - this.$refs.card.offsetTop - this.height / 2;
+      },
+      handleMouseEnter() {
+        clearTimeout(this.mouseLeaveDelay);
+      },
+      handleMouseLeave() {
+        this.mouseLeaveDelay = setTimeout(() => {
+          this.mouseX = 0;
+          this.mouseY = 0;
+        }, 1000);
+      }
+    }
+  });
+
+  const app = new Vue({
+    el: '#app'
+  });
+</script>
+
+    <!-- Footer -->
+<footer class="footer">
+  <p>&copy; 2024 Canes RS. Todos os direitos reservados.</p>
+  <!-- Ícones de Redes Sociais -->
+  <div class="social-icons">
+      <a href="#" class="facebook"><span>Facebook</span></a>
+      <a href="#" class="twitter"><span>Twitter</span></a>
+      <a href="#" class="google-plus"><span>Google+</span></a>
+      <a href="#" class="github"><span>Github</span></a>
+      <a href="#" class="codepen"><span>CodePen</span></a>
+  </div>
+</footer>
+
+</body>
+
+</html>

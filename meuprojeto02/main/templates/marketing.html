@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canes RS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+     <!-- Incluindo FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="https://scontent-gru1-2.xx.fbcdn.net/v/t39.30808-6/469044015_1845406492886065_3027740038612027073_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHUapbCxfRaqzq3xpvQI0_mN2rsNR9zZP83auw1H3Nk_2Yonwi7XnQHY3yl2xYLbgDpjZlm8shZ9v2ZA5jZkseh&_nc_ohc=dt8agHX2DsoQ7kNvgFmNsxm&_nc_zt=23&_nc_ht=scontent-gru1-2.xx&_nc_gid=A4r6z9hC1CJAf72FKOXdNKn&oh=00_AYDWot1cbwh2Oz2PFfQWPJgiwKPHbx3DIMIPSB-ZajEHow&oe=67552163" type="image/png">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Garantir que o rodapé fique no fim da tela */
+        }
+
+        /* Navbar */
+        .navbar-brand {
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .navbar-brand img {
+            width: 40px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px; /* Ajuste da margem para a navbar fixa */
+            border-radius: 8px; /* Bordas arredondadas para suavizar a aparência */
+        }
+
+        /* Ajuste do título e subtítulo dentro do header */
+        header h1 {
+            font-size: 2.5em; /* Aumentei o tamanho do título */
+            margin-bottom: 10px; /* Adicionei espaço abaixo do título */
+        }
+
+        header p {
+            font-size: 1.2em; /* Tamanho do subtítulo */
+            font-weight: 400;
+            margin-top: 10px; /* Adicionei um pouco de margem no topo */
+        }
+
+        #cursos {
+            padding: 20px;
+            background-color: #f9f9f9; /* Cor de fundo mais suave */
+            border-radius: 8px; /* Bordas arredondadas */
+            margin-top: 20px;
+        }
+
+        /* Ajuste de estilo no título da categoria */
+        #cursos h3 {
+            font-size: 2em;
+            margin-bottom: 30px; /* Adicionei espaçamento para separar do conteúdo */
+            text-align: center;
+            color: #333; /* Cor mais escura para o título */
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .categoria {
+            margin-bottom: 40px;
+        }
+
+        .categoria h3 {
+            font-size: 1.6em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .lista-cursos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 1200px
+        }
+
+        .lista-cursos li {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .lista-cursos li:hover {
+            transform: translateY(-5px);
+            cursor: pointer;
+        }
+
+        .lista-cursos img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .lista-cursos h4 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .descricao {
+            font-size: 1em;
+            color: #555;
+        }
+
+        .botao-inscricao {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .botao-inscricao:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        .footer {
+          background-color: #333;
+          color: #fff;
+          padding: 20px;
+          text-align: center;
+          margin-top: auto;
+        }
+    
+        .footer .row {
+          margin-bottom: 20px;
+        }
+    
+        .footer h5 {
+          font-size: 18px;
+          font-weight: bold;
+    
+        }
+    
+        .footer ul {
+          list-style: none;
+          padding: 0;
+        }
+    
+        .footer ul li {
+          margin-bottom: 10px;
+        }
+    
+        .footer ul li a {
+          color: #fff;
+          text-decoration: none;
+        }
+    
+        .footer ul li a:hover {
+          text-decoration: underline;
+        }
+    
+        .footer .text-center {
+          font-size: 14px;
+          color: #bbb;
+        }
+    
+         /* Estilo para os ícones dentro do rodapé */
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 10px;
+    }
+    
+    /* Estilos para os links dos ícones */
+    .social-icons a {
+        color: #fff;
+        background: #555; /* Cor de fundo mais discreta para os ícones */
+        border-radius: 50%;
+        text-align: center;
+        text-decoration: none;
+        font-family: 'FontAwesome', sans-serif;
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        padding-top: 10px;
+        transition: all 0.3s ease;
+    }
+    
+    .social-icons a:hover {
+        background: #007bff; /* Cor de fundo do hover */
+    }
+    
+    /* Pop-up de texto ao passar o mouse */
+    .social-icons a span {
+        color: #666;
+        position: absolute;
+        font-family: sans-serif;
+        bottom: 0;
+        left: -25px;
+        right: -25px;
+        padding: 5px 7px;
+        z-index: -1;
+        font-size: 14px;
+        border-radius: 2px;
+        background: #fff;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    
+    /* Setas para os pop-ups */
+    .social-icons a span:before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #fff;
+        position: absolute;
+        bottom: -5px;
+        left: 40px;
+    }
+    
+    /* Exibição do pop-up */
+    .social-icons a:hover span {
+        bottom: 50px;
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    /* Font Awesome Icons */
+    .social-icons a.facebook:before {
+        content: '\f09a'; /* Facebook */
+    }
+    
+    .social-icons a.twitter:before {
+        content: '\f099'; /* Twitter */
+    }
+    
+    .social-icons a.google-plus:before {
+        content: '\f0d5'; /* Google+ */
+    }
+    
+    .social-icons a.github:before {
+        content: '\f113'; /* Github */
+    }
+    
+    .social-icons a.codepen:before {
+        content: '\f1cb'; /* CodePen */
+    }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img src="https://scontent-gru1-2.xx.fbcdn.net/v/t39.30808-6/469044015_1845406492886065_3027740038612027073_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=flQCp1KYCU8Q7kNvgEl_Xn2&_nc_zt=23&_nc_ht=scontent-gru1-2.xx&_nc_gid=A2tVyF3GRz2GVyVJrxr_1A6&oh=00_AYBefhYS59qNNszgRLYTd2xYfGBr26h7yR2rSEVgFDYSvw&oe=678345E3" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sobre' %}">Sobre Nós</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cursos' %}">Cursos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contato' %}">Contato</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <h1>Explore nossos cursos de Marketing</h1>
+        <p>Matrículas abertas!</p>
+    </header>
+
+    <!-- Seção Cursos -->
+    <section id="cursos">
+        <!-- Categoria: Marketing Digital -->
+        <div class="container">
+            <h3>Marketing Digital</h3>
+            <ul class="lista-cursos">
+                <li>
+                    <img src="https://www.searchenginejournal.com/wp-content/uploads/2021/02/social-media-opportunities-601bc9d146e00.png" alt="Imagem do Curso de MKT Digital">
+                    <div>
+                        <h4>Marketing para Redes Sociais</h4>
+                        <p class="descricao">Aprenda a criar campanhas eficazes no Instagram, Facebook e outras plataformas.</p>
+                    </div>
+                    <a href="{% url 'matriculas' %}">
+                        <button class="botao-inscricao">Inscrever-se</button>
+                    </a>
+                </li>
+                <li>
+                    <img src="https://media.licdn.com/dms/image/D4D12AQEHKEsZrCLCXQ/article-cover_image-shrink_600_2000/0/1665588908377?e=2147483647&v=beta&t=aR3kFpd7DzphVUpupa4cYBzbT7Kps99UJlbRznDHOno" alt="Imagem do Curso de SEO">
+                    <div>
+                        <h4>SEO - Otimização para Mecanismos de Busca</h4>
+                        <p class="descricao">Domine as técnicas de SEO e aumente o tráfego orgânico do seu site.</p>
+                    </div>
+                    <a href="{% url 'matriculas' %}">
+                        <button class="botao-inscricao">Inscrever-se</button>
+                    </a>
+                </li>
+                <li>
+                    <img src="https://media.licdn.com/dms/image/C5612AQHpd3zb5m1QbQ/article-cover_image-shrink_720_1280/0/1611654861029?e=2147483647&v=beta&t=VnMCJoRBlu3fLcAk7KrJ8ch2FCr0SBfeWNqSdF8tPCQ" alt="Imagem do Curso de Email MKT">
+                    <div>
+                        <h4>Email Marketing</h4>
+                        <p class="descricao">Aprenda a criar campanhas de email marketing que convertem.</p>
+                    </div>
+                    <a href="{% url 'matriculas' %}">
+                        <button class="botao-inscricao">Inscrever-se</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2024 Canes RS. Todos os direitos reservados.</p>
+    <!-- Ícones de Redes Sociais -->
+    <div class="social-icons">
+        <a href="#" class="facebook"><span>Facebook</span></a>
+        <a href="#" class="twitter"><span>Twitter</span></a>
+        <a href="#" class="google-plus"><span>Google+</span></a>
+        <a href="#" class="github"><span>Github</span></a>
+        <a href="#" class="codepen"><span>CodePen</span></a>
+    </div>
+</footer>
+
+</body>
+
+</html>

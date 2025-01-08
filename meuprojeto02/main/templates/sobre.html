@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canes RS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+  <!-- Incluindo FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="https://scontent-gru1-2.xx.fbcdn.net/v/t39.30808-6/469044015_1845406492886065_3027740038612027073_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHUapbCxfRaqzq3xpvQI0_mN2rsNR9zZP83auw1H3Nk_2Yonwi7XnQHY3yl2xYLbgDpjZlm8shZ9v2ZA5jZkseh&_nc_ohc=dt8agHX2DsoQ7kNvgFmNsxm&_nc_zt=23&_nc_ht=scontent-gru1-2.xx&_nc_gid=A4r6z9hC1CJAf72FKOXdNKn&oh=00_AYDWot1cbwh2Oz2PFfQWPJgiwKPHbx3DIMIPSB-ZajEHow&oe=67552163" type="image/png">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      padding-top: 70px;
+      background-color: #f7f7f7;
+    }
+    
+    /* Navbar */
+    .navbar-brand {
+      font-size: 30px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    .navbar-brand img {
+      width: 40px;
+      height: auto;
+      margin-right: 10px;
+    }
+    
+    /* Hero Section */
+    .hero-section {
+      background-image: url('https://www.microsoft.com/en-us/research/uploads/prod/2022/08/Chise-header-draft-2-scaled.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 50vh; /* Ajuste da altura para 60% da altura da tela */
+      min-height: 400px; /* Garantir que não fique muito pequeno em telas pequenas */
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+      border-radius: 8px;
+    }
+    
+    .hero-section h1 {
+      font-size: 48px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Sections Styling */
+    .section {
+      padding: 60px 20px;
+      max-width: 1200px; /* Limitar a largura máxima */
+      margin: 0 auto; /* Centralizar o conteúdo */
+    }
+    
+    /* Section with Text Box */
+    .info-box {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    
+    .info-box h2 {
+      font-size: 36px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    .info-box p {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+    
+    /* Section Image and Text Layout */
+    .about-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .about-section .info-text {
+      flex: 1;
+      padding: 20px;
+    }
+    
+    .about-section .info-text h2 {
+      font-size: 36px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    .about-section .info-text p {
+      font-size: 18px;
+      color: #555;
+    }
+    
+    .info-image {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      overflow: hidden; /* Garante que a caixa de texto apareça apenas dentro da área da imagem */
+      transform-style: preserve-3d;
+    }
+
+    .imgBx {
+      position: relative;
+      width: 100%;
+    }
+
+    .contentBx {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.8); /* Caixa de texto branca */
+      padding: 20px;
+      text-align: center;
+      transform: translateY(-100%);
+      transform-origin: top;
+      transition: transform 0.5s ease-in-out;
+      opacity: 0; /* Inicialmente escondida */
+    }
+
+    .info-image:hover .contentBx {
+      transform: translateY(0);
+      opacity: 1; /* Aparece ao passar o mouse */
+    }
+    .info-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* Efeito Vanilla Tilt */
+    .info-image {
+      transform-style: preserve-3d; 
+    }
+
+    .info-image img {
+      transition: transform 0.3s ease-in-out;
+    }
+    
+    /* Mission Section */
+    .mission-section {
+      background-color: #f7f7f7;
+      padding: 60px 20px;
+    }
+    
+    /* Team Section */
+    .team-section {
+      padding: 60px 20px;
+      background-color: #fff;
+      text-align: center;
+    }
+    
+    .team-section h2 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+    
+    .team-member {
+      display: inline-block;
+      width: 250px;
+      margin: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    
+    .team-member img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+    
+    .team-member h3 {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .team-member p {
+      font-size: 16px;
+      color: #777;
+    }
+    
+    /* Footer */
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer .row {
+      margin-bottom: 20px;
+    }
+
+    .footer h5 {
+      font-size: 18px;
+      font-weight: bold;
+
+    }
+
+    .footer ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .footer .text-center {
+      font-size: 14px;
+      color: #bbb;
+    }
+
+     /* Estilo para os ícones dentro do rodapé */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Estilos para os links dos ícones */
+.social-icons a {
+    color: #fff;
+    background: #555; /* Cor de fundo mais discreta para os ícones */
+    border-radius: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'FontAwesome', sans-serif;
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    padding-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background: #007bff; /* Cor de fundo do hover */
+}
+
+/* Pop-up de texto ao passar o mouse */
+.social-icons a span {
+    color: #666;
+    position: absolute;
+    font-family: sans-serif;
+    bottom: 0;
+    left: -25px;
+    right: -25px;
+    padding: 5px 7px;
+    z-index: -1;
+    font-size: 14px;
+    border-radius: 2px;
+    background: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+/* Setas para os pop-ups */
+.social-icons a span:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff;
+    position: absolute;
+    bottom: -5px;
+    left: 40px;
+}
+
+/* Exibição do pop-up */
+.social-icons a:hover span {
+    bottom: 50px;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Font Awesome Icons */
+.social-icons a.facebook:before {
+    content: '\f09a'; /* Facebook */
+}
+
+.social-icons a.twitter:before {
+    content: '\f099'; /* Twitter */
+}
+
+.social-icons a.google-plus:before {
+    content: '\f0d5'; /* Google+ */
+}
+
+.social-icons a.github:before {
+    content: '\f113'; /* Github */
+}
+
+.social-icons a.codepen:before {
+    content: '\f1cb'; /* CodePen */
+}
+    
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="https://scontent-gru1-2.xx.fbcdn.net/v/t39.30808-6/469044015_1845406492886065_3027740038612027073_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=flQCp1KYCU8Q7kNvgEl_Xn2&_nc_zt=23&_nc_ht=scontent-gru1-2.xx&_nc_gid=A2tVyF3GRz2GVyVJrxr_1A6&oh=00_AYBefhYS59qNNszgRLYTd2xYfGBr26h7yR2rSEVgFDYSvw&oe=678345E3" alt="Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Início</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'sobre' %}">Sobre Nós</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'cursos' %}">Cursos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'contato' %}">Contato</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <h1>Sobre o Canes RS</h1>
+  </section>
+
+  <!-- About Section -->
+  <section class="section about-section">
+    <div class="info-text">
+      <h2>Quem Somos</h2>
+      <p>O Canes RS é uma plataforma educacional inspirada em grandes instituições de ensino. Nosso objetivo é proporcionar aos alunos a melhor experiência de aprendizado, focada no desenvolvimento de habilidades práticas que os preparem para o mercado de trabalho.</p>
+    </div>
+    <div class="info-image">
+      <div class="imgBx">
+        <img src="https://static.vecteezy.com/system/resources/previews/002/173/392/non_2x/student-studying-at-home-free-vector.jpg" alt="Canes" title="Canes">
+      </div>
+      <div class="contentBx">
+        <h2>Você sabia?</h2>
+        <p>A "Teoria da Carga Cognitiva" diz que nossa capacidade cognitiva de memória operacional é limitada. Isso significa que nosso cérebro pode ficar sobrecarregado se bombardeado com muitas informações. Por isso é tão importante você escolher com sabedoria onde vai estudar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="section mission-section">
+    <div class="info-box">
+      <h2>Nossa Missão</h2>
+      <p>Oferecer cursos de alta qualidade e de fácil acesso, capacitando nossos alunos com as ferramentas necessárias para se destacarem nas áreas de Programação, Marketing Digital, Design Gráfico e muito mais.</p>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="section team-section">
+    <h2>Nosso Time</h2>
+    
+    <div class="team-member">
+        <a href="https://github.com/fivn999" class="card-link">
+            <div class="card">
+                <img src="https://s2-ge.glbimg.com/acVMrFVzP50qw8DssMb1o6EPD0k=/0x0:1215x717/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2019/6/0/ECAn12SMApcibYfNCuxw/lol-veigar.jpg" alt="Membro 1">
+                <h3>João Gabriel</h3>
+                <p>CEO e Desenvolvedor</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="team-member">
+        <a href="https://github.com/AbatukamXD" class="card-link">
+            <div class="card">
+                <img src="https://s2-ge.glbimg.com/iE8jYIRoaLdZwquW8lUssN_u3_A=/0x0:1215x717/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2022/c/8/kBWD2lR4KYaRx6y1BV2w/jhin-0.jpg" alt="Membro 2">
+                <h3>Luis Eduardo</h3>
+                <p>CEO e Designer Gráfico</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="team-member">
+        <a href="https://github.com/Capitaoneo3" class="card-link">
+            <div class="card">
+                <img src="https://s2-techtudo.glbimg.com/gCylq6oLYkXhxuzPUZRv_TTcU7s=/0x0:1215x717/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2022/I/g/BUHgCcSjygLjDMe1FceQ/teemo-0.jpg" alt="Membro 3">
+                <h3>João Capitaneo</h3>
+                <p>Diretor de Cursos</p>
+            </div>
+        </a>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        VanillaTilt.init(document.querySelectorAll(".card"), {
+            max: 25,  // Ângulo máximo de inclinação
+            speed: 400, // Velocidade do movimento
+            glare: true, // Brilho ao mover o mouse
+            "max-glare": 0.3, // Intensidade do brilho
+        });
+    });
+</script>
+
+
+  <!-- Footer -->
+<footer class="footer">
+  <p>&copy; 2024 Canes RS. Todos os direitos reservados.</p>
+  <!-- Ícones de Redes Sociais -->
+  <div class="social-icons">
+      <a href="#" class="facebook"><span>Facebook</span></a>
+      <a href="#" class="twitter"><span>Twitter</span></a>
+      <a href="#" class="google-plus"><span>Google+</span></a>
+      <a href="#" class="github"><span>Github</span></a>
+      <a href="#" class="codepen"><span>CodePen</span></a>
+  </div>
+</footer>
+
+ 
+</body>
+
+</html>
