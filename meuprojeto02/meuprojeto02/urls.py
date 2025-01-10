@@ -22,7 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
    #rota, view responsavel nome de referencia
-    path('teste', views.index, name='index'),
+    path('inicio', views.index, name='index'),
     path('sobre',views.sobre,name='sobre'),
     path('cursos',views.cursos,name='cursos'),
     path('contato', views.contato, name='contato'),
@@ -32,6 +32,7 @@ urlpatterns = [
     path('programacao',views.programacao,name='programacao'),
     path('marketing',views.marketing,name='marketing'),
     path('design', views.design, name='design'),
+    path('editarusuario', views.editarusuario, name='editarusuario'),
     
      
     #  path('cadastro/', views.cadastro, name='cadastro'),

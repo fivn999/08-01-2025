@@ -36,31 +36,132 @@ def contato(request):
     return render(request, 'contato.html')
 
 def login(request):
-     request.method == 'POST'
-     email = request.post.get('email')
-     senha = request.post.get('senha')
-     if not all (email, senha):
-         return render (request, 'login.html')
-     
-     bd = conecta_no_banco_de_dados()
-     cursor = bd.cursor()
-     cursor.execute(
-         """SELECT * FROM usuarios
-            WHERE email = %s AND senha = %s;""", 
-            (email, senha,))
-     
-     cursor.close()
+    request.session['usuario_id'] = ""
 
-     return render (request, 'login.html')
+    # Se for uma solicitação POST, valida o login
+    if request.method == 'POST':
+        form = UserLoginForm(request.POST)
 
+        # Verifique se o formulário foi validado corretamente
+        if form.is_valid():
+            # Extrair as credenciais do formulário
+            email = form.cleaned_data['email']
+            senha = form.cleaned_data['senha']
 
-    # return render(request, 'login.html')
+            # Conectar ao banco de dados
+            bd = conecta_no_banco_de_dados()
+
+            # Verificar as credenciais no banco de dados
+            cursor = bd.cursor()
+            cursor.execute("""
+                        SELECT *
+                        FROM usuarios
+                        WHERE email = %s AND senha = %s;
+                    """, (email, senha))
+            usuario = cursor.fetchone()
+            cursor.close()
+            bd.close()
+
+            # Se o usuário for encontrado
+            if usuario:
+                request.session['usuario_id'] = usuario[0]  # Salva o ID do usuário na sessão
+                return redirect('index')  # Redireciona para a página inicial
+
+            else:
+                # Se não encontrar o usuário, exibe uma mensagem de erro
+                mensagem_erro = 'Email ou senha inválidos.'
+                return render(request, 'login.html', {'form': form, 'mensagem_erro': mensagem_erro})
+
+    else:
+        # Caso contrário, cria um formulário vazio
+        form = UserLoginForm()
+
+    return render(request, 'login.html', {'form': form})
 
 def registro(request):
-    return render(request, 'registro.html')
+    request.session['usuario_id'] = ""
+
+    # Se for uma solicitação POST, valida o login
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+
+        # Verifique se o formulário foi validado corretamente
+        if form.is_valid():
+            # Extrair as credenciais do formulário
+            nome = form.cleaned_data['nome']
+            email = form.cleaned_data['email']
+            senha = form.cleaned_data['senha']
+
+            # Conectar ao banco de dados
+            bd = conecta_no_banco_de_dados()
+            cursor = bd.cursor()
+            sql = (
+                """
+                INSERT INTO usuarios
+                SET nome = %s, email = %s, senha = %s;
+                """
+            )
+            values = (nome, email, senha)
+            cursor.execute(sql, values)
+            bd.commit()  
+            cursor.close()
+            bd.close()
+
+
+            return redirect('/')
+          
+
+    else:
+        # Caso contrário, cria um formulário vazio
+        form = UserRegistrationForm()
+
+    return render(request, 'registro.html', {'form': form})
+
+def editarusuario(request,id):
+    if not request.session.get('usuario_id'):
+        return redirect('/')
+    else:
+        id_usuario = id
+        bd = conecta_no_banco_de_dados()
+        cursor = bd.cursor()
+        cursor.execute("""
+            SELECT id, nome, email
+            FROM usuarios
+            WHERE id = %s;
+        """, (id,))
+        dados_usuario = cursor.fetchone()
+        cursor.close()
+        bd.close()
+        if request.method == 'POST':
+            nome = request.POST.get('nome')
+            email = request.POST.get('email')
+            senha = request.POST.get('senha')    
+            if not all([nome, email, senha]):
+                return render(request, 'usuarios.html')
+            bd = conecta_no_banco_de_dados()
+            cursor = bd.cursor()
+            sql = (
+                """
+                UPDATE usuarios
+                SET nome = %s, email = %s, senha = %s
+                WHERE id = %s;
+                """
+            )
+            values = (nome, email, senha, id)
+            cursor.execute(sql, values)
+            bd.commit()  # Assumindo que você tenha gerenciamento de transações
+            cursor.close()
+            bd.close()
+
+            # Redirecione para a página de sucesso ou exiba a mensagem de confirmação
+            return redirect('paginainicial')     
+
+        # Exiba o formulário (assumindo lógica de renderização)
+        return render(request, 'editarusuario.html',{'id': id_usuario})
 
 def matriculas(request):
     return render(request, 'matriculas.html')
+
 
 def programacao(request):
     return render(request, 'programacao.html')
