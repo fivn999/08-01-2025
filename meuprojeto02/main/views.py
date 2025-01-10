@@ -65,6 +65,7 @@ def login(request):
             # Se o usuário for encontrado
             if usuario:
                 request.session['usuario_id'] = usuario[0]  # Salva o ID do usuário na sessão
+             
                 return redirect('index')  # Redireciona para a página inicial
 
             else:
@@ -117,47 +118,49 @@ def registro(request):
 
     return render(request, 'registro.html', {'form': form})
 
-def editarusuario(request,id):
+def editarusuario(request, id ):
     if not request.session.get('usuario_id'):
         return redirect('/')
-    else:
-        id_usuario = id
+   
+    bd = conecta_no_banco_de_dados()
+    cursor = bd.cursor()
+    cursor.execute("""
+        SELECT id, nome, email
+        FROM usuarios
+        WHERE id = %s;
+    """, (id,))
+
+    dados_usuario = cursor.fetchone()
+    cursor.close()
+    bd.close()
+
+    if not dados_usuario:
+        return redirect('index') 
+
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        email = request.POST.get('email')
+        senha = request.POST.get('senha')
+        
+        
+        if not all([nome, email, senha]):
+            return render(request, 'editarusuario.html')
+
+        # Atualiza os dados no banco de dados
         bd = conecta_no_banco_de_dados()
         cursor = bd.cursor()
         cursor.execute("""
-            SELECT id, nome, email
-            FROM usuarios
+            UPDATE usuarios
+            SET nome = %s, email = %s, senha = %s
             WHERE id = %s;
-        """, (id,))
-        dados_usuario = cursor.fetchone()
+        """, (nome, email, senha, id))
+        bd.commit()
         cursor.close()
         bd.close()
-        if request.method == 'POST':
-            nome = request.POST.get('nome')
-            email = request.POST.get('email')
-            senha = request.POST.get('senha')    
-            if not all([nome, email, senha]):
-                return render(request, 'index.html')
-            bd = conecta_no_banco_de_dados()
-            cursor = bd.cursor()
-            sql = (
-                """
-                UPDATE usuarios
-                SET nome = %s, email = %s, senha = %s
-                WHERE id = %s;
-                """
-            )
-            values = (nome, email, senha, id)
-            cursor.execute(sql, values)
-            bd.commit()  # Assumindo que você tenha gerenciamento de transações
-            cursor.close()
-            bd.close()
 
-            # Redirecione para a página de sucesso ou exiba a mensagem de confirmação
-            return redirect('index')     
+        return redirect('index')
 
-        # Exiba o formulário (assumindo lógica de renderização)
-        return render(request, 'editarusuario.html',{'id': id_usuario})
+    return render(request, 'editarusuario.html', )
 
 def matriculas(request):
     return render(request, 'matriculas.html')
@@ -171,3 +174,39 @@ def marketing(request):
 
 def design(request):
     return render(request, 'design.html')
+def usuarios(request):
+    if not request.session.get('usuario_id'):
+            return redirect('/')
+    else:
+        bd = conecta_no_banco_de_dados()
+        cursor = bd.cursor()
+        cursor.execute('SELECT * FROM usuarios;')
+        usuarios = cursor.fetchall()
+        
+        # Renderize o template HTML com os contatos recuperados
+        return render(request, 'usuarios.html', {"usuarios": usuarios})
+    
+def excluirusuario(request,id):
+    if not request.session.get('usuario_id'):
+            return redirect('/')
+    else:
+        try:
+            # Estabelecer conexão com o banco de dados (substitua 'seu_banco_de_dados' pelo nome real)
+            bd =conecta_no_banco_de_dados()
+            cursor = bd.cursor()
+
+            # Evitar SQL injection usando parâmetros nomeados
+            sql = 'DELETE FROM usuarios WHERE id = %(user_id)s;'
+            params = {'user_id': id}
+
+            cursor.execute(sql, params)
+            bd.commit()
+            cursor.close()
+
+            messages.success(request, 'Usuário excluído com sucesso!')
+            return redirect('index')
+
+        except Exception as e:
+            print(f"Erro ao excluir usuário: {e}")
+            messages.error(request, 'Falha ao excluir usuário. Tente novamente mais tarde.')
+            return redirect('index')
