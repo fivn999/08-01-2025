@@ -1,3 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canes RS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+   <!-- Incluindo FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="https://scontent-gru1-2.xx.fbcdn.net/v/t39.30808-6/469044015_1845406492886065_3027740038612027073_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=flQCp1KYCU8Q7kNvgEl_Xn2&_nc_zt=23&_nc_ht=scontent-gru1-2.xx&_nc_gid=A2tVyF3GRz2GVyVJrxr_1A6&oh=00_AYBefhYS59qNNszgRLYTd2xYfGBr26h7yR2rSEVgFDYSvw&oe=678345E3" type="image/png">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      padding-top: 70px;
+      background-color: #f7f7f7;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 30px;
+      text-align: center; /* Centraliza os textos */
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px; /* Adiciona espaço abaixo do título */
+    }
+
+    .section-content {
+      font-size: 16px;
+      color: #777;
+      margin-top: 10px;
+      text-align: center; /* Garante que o texto do conteúdo seja centralizado */
+      max-width: 800px; /* Limita a largura para evitar texto esticado */
+    }
+
+    /* Certifique-se de que o link ocupe todo o card */
+.card-link {
+  display: block; /* Faz o link ocupar toda a área do card */
+  text-decoration: none; /* Remove o sublinhado do link */
+  color: inherit; /* Faz com que a cor do texto do link seja a mesma do card */
+}
+
+/* Garante que o conteúdo do card (fundo e informações) não seja alterado */
+.card-wrap {
+  position: relative;
+  perspective: 1000px;
+}
+
+.card {
+  position: relative;
+  width: 285px;
+  height: 400px;
+  background-color: #333;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.6s ease;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.card-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.card-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  color: #fff;
+  transform: translateY(100%);
+  transition: transform 0.6s ease;
+  background: rgba(0, 0, 0, 0.6);
+  border-top: 3px solid #fff;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Efeitos de Hover */
+.card-wrap:hover .card {
+  transform: unset;
+}
+
+.card-wrap:hover .card-bg {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+.card-wrap:hover .card-info {
+  transform: translateY(0);
+}
+
+.card-wrap:hover .card-info p {
+  opacity: 1;
+}
+
+    .cta-btn {
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .cta-btn:hover {
+      background-color: #0056b3;
+      color: white;
+    }
+
+    /* Navbar */
+    .navbar-brand {
+      font-size: 30px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .navbar-brand img {
+      width: 40px;
+      height: auto;
+      margin-right: 10px;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 8px; /* Bordas arredondadas */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave */
+      opacity: 0;
+      animation: fadeIn 1s forwards, zoomIn 1.5s ease-in-out forwards; /* Animações de entrada */
+    }
+
+    /* Animação de fadeIn - Faz a imagem aparecer suavemente */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Animação de zoomIn - Faz a imagem ampliar levemente ao entrar */
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.95); /* Inicia com a imagem ligeiramente menor */
+  }
+  100% {
+    transform: scale(1); /* A imagem cresce para o seu tamanho normal */
+  }
+}
+
+/* Efeito de hover para ampliar a imagem e dar brilho */
+.carousel-item img:hover {
+  transform: scale(1.05); /* Aumenta a imagem ao passar o mouse */
+  filter: brightness(1.1); /* Aumenta o brilho */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .carousel-item img {
+    height: 400px; /* Ajuste a altura para telas menores */
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-item img {
+    height: 300px; /* Ajuste ainda mais para dispositivos móveis */
+  }
+}
+
+    .large-text {
+      font-size: 48px;
+      font-weight: bold;
+      color: #333;
+    }
+
+
+    /* Ajuste para telas menores */
+    @media (max-width: 767px) {
+      .login-btn {
+        top: 80px; /* Ajuste para que não sobreponha a navbar em dispositivos menores */
+      }
+    }
+
+/* Contêiner para a info-box e imagem */
+.info-box-container {
+  display: flex; /* Usando Flexbox para alinhar os itens */
+  align-items: center; /* Alinha o conteúdo verticalmente no centro */
+  justify-content: center; /* Alinha o conteúdo horizontalmente */
+  position: relative; /* Necessário para posicionar a imagem ao lado */
+  gap: 20px; /* Espaçamento entre o texto e a imagem */
+  padding: 20px 0; /* Adiciona um pouco de espaço em cima e embaixo */
+}
+
+/* Estilos para a caixa de informações (info-box) */
+.info-box {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex; /* Permite usar o Flexbox dentro da box */
+  flex-direction: column; /* Organiza os elementos na vertical */
+  justify-content: center; /* Centraliza o conteúdo verticalmente */
+  align-items: center; /* Centraliza o conteúdo horizontalmente */
+  width: 800px; /* Largura fixa para a box */
+  height: auto; /* A altura é ajustada automaticamente */
+  margin-top: 40px; /* Espaço para separar da seção anterior (carrossel) */
+  margin-bottom: 30px; /* Espaço para separar dos cards abaixo */
+}
+
+/* Ajustes no título */
+.info-box h2 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px; /* Espaço abaixo do título */
+}
+
+/* Ajustes no conteúdo */
+.info-box .section-content {
+  font-size: 16px;
+  color: #777;
+  max-width: 800px; /* Limita a largura para evitar que o texto se estique demais */
+  margin: 0; /* Remove margens para garantir melhor centralização */
+}
+
+/* Estilos para a imagem */
+.info-image {
+  width: 180px; /* Tamanho reduzido para a imagem */
+  height: auto; /* Mantém a proporção da imagem */
+  border-radius: 8px; /* Bordas arredondadas para combinar com o estilo da box */
+  position: absolute; /* Posiciona a imagem no canto direito */
+  right: 90px; /* Distância da borda direita */
+  z-index: -1;
+}
+
+
+/* Footer */
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer .row {
+      margin-bottom: 20px;
+    }
+
+    .footer h5 {
+      font-size: 18px;
+      font-weight: bold;
+
+    }
+
+    .footer ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .footer .text-center {
+      font-size: 14px;
+      color: #bbb;
+    }
+
+     /* Estilo para os ícones dentro do rodapé */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Estilos para os links dos ícones */
+.social-icons a {
+    color: #fff;
+    background: #555; /* Cor de fundo mais discreta para os ícones */
+    border-radius: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'FontAwesome', sans-serif;
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    padding-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background: #007bff; /* Cor de fundo do hover */
+}
+
+/* Pop-up de texto ao passar o mouse */
+.social-icons a span {
+    color: #666;
+    position: absolute;
+    font-family: sans-serif;
+    bottom: 0;
+    left: -25px;
+    right: -25px;
+    padding: 5px 7px;
+    z-index: -1;
+    font-size: 14px;
+    border-radius: 2px;
+    background: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+/* Setas para os pop-ups */
+.social-icons a span:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff;
+    position: absolute;
+    bottom: -5px;
+    left: 40px;
+}
+
+/* Exibição do pop-up */
+.social-icons a:hover span {
+    bottom: 50px;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Font Awesome Icons */
+.social-icons a.facebook:before {
+    content: '\f09a'; /* Facebook */
+}
+
+.social-icons a.twitter:before {
+    content: '\f099'; /* Twitter */
+}
+
+.social-icons a.google-plus:before {
+    content: '\f0d5'; /* Google+ */
+}
+
+.social-icons a.github:before {
+    content: '\f113'; /* Github */
+}
+
+.social-icons a.codepen:before {
+    content: '\f1cb'; /* CodePen */
+}
+
+  </style>
+</head>
 {% extends 'template.html' %}
 
 {% block titulo %}

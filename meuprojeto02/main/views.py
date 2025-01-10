@@ -137,7 +137,7 @@ def editarusuario(request,id):
             email = request.POST.get('email')
             senha = request.POST.get('senha')    
             if not all([nome, email, senha]):
-                return render(request, 'usuarios.html')
+                return render(request, 'index.html')
             bd = conecta_no_banco_de_dados()
             cursor = bd.cursor()
             sql = (
@@ -154,7 +154,7 @@ def editarusuario(request,id):
             bd.close()
 
             # Redirecione para a página de sucesso ou exiba a mensagem de confirmação
-            return redirect('paginainicial')     
+            return redirect('index')     
 
         # Exiba o formulário (assumindo lógica de renderização)
         return render(request, 'editarusuario.html',{'id': id_usuario})

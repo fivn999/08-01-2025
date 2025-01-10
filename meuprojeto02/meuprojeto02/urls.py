@@ -32,7 +32,7 @@ urlpatterns = [
     path('programacao',views.programacao,name='programacao'),
     path('marketing',views.marketing,name='marketing'),
     path('design', views.design, name='design'),
-    path('editarusuario', views.editarusuario, name='editarusuario'),
+    path('editarusuario/<int:id>', views.editarusuario, name='editarusuario'),
     
      
     #  path('cadastro/', views.cadastro, name='cadastro'),
